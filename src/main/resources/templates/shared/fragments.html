@@ -1,0 +1,46 @@
+<div th:fragment="header-css">
+  <!-- this is header-css -->
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/css/platformy.css}"/>
+
+  <script th:src="@{/webjars/popper.js/ 2.9.3/popper.js}"></script>
+  <script th:src="@{../webjars/bootstrap/5.2.2/js/bootstrap.bundle.min.js}"></script>
+</div>
+
+<div th:fragment="footer">
+  <footer>
+    © 2022 Bartłomiej Mikołajczuk
+  </footer>
+</div>
+
+<div th:fragment="menu">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+      <a class="navbar-brand" th:href="@{/}">Forum</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" >
+            <a class="nav-link active " th:href="@{/form}">Dodaj post</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/postList}">Lista postów</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/form}">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

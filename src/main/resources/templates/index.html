@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{shared/fragments :: header-css}"/>
+    <meta charset="UTF-8">
+    <title>Strona powitalna</title>
+</head>
+<body>
+<div th:replace="~{shared/fragments :: menu}"></div>
+<div class="container">
+    Strona główna
+    <div th:insert="~{shared/fragments :: footer}"></div>
+</div>
+</body>
+</html>

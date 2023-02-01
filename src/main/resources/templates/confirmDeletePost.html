@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="~{shared/fragments :: header-css}"/>
+  <meta charset="UTF-8">
+  <title>Strona powitalna</title>
+</head>
+<body>
+<div th:replace="~{shared/fragments :: menu}"></div>
+<div class="container">
+  <h3>Czy chcesz usunąć post <span th:text="${atrybut.title}"/> ?</h3>
+  <a class="btn btn-outline-danger" th:href="@{/postDeleteConfirm/{id}(id=${atrybut.id})}">Usuń</a>
+  <a class="btn btn-outline-primary" th:href="@{/postList}">Powrót</a>
+
+  <div th:insert="~{shared/fragments :: footer}"></div>
+</div>
+</body>
+</html>
