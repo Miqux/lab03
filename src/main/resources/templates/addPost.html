@@ -21,7 +21,9 @@
           Tytuł
         </td>
         <td>
-          <input type="text" th:field="*{title}" /></br>
+          <input type="text" th:field="*{title}" />
+          <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+          </br>
         </td>
       </tr>
       <tr>
@@ -30,7 +32,8 @@
           Treść
         </td>
         <td>
-          <textarea type="text" rows="4" cols="50" th:field="*{contents}" /></br>
+          <textarea type="text" rows="4" cols="50" th:field="*{contents}" />
+          <div class="alert alert-warning" th:if="${#fields.hasErrors('contents')}" th:errors="*{contents}"></div>
         </td>
       </tr>
       <tr>
@@ -39,7 +42,6 @@
         </td>
         <td>
           <select th:field="*{category.id}">
-            <option value="-1">--wybierz kategorię--</option>
             <option th:each="Post : ${category}"
                     th:value="${Post.id}"
                     th:text=" ${Post.name}"/></select>
@@ -51,7 +53,8 @@
              th:value="${pref.id}"/>
       <label th:text="${pref.name}"></label>
     </div>
-    <button type="sumbit" class="btn btn-success">Dodaj!</button>
+    <button th:if= "${#strings.isEmpty(postModel.title)}" type="sumbit" class="btn btn-success">Dodaj!</button>
+    <button th:unless="${#strings.isEmpty(postModel.title)}" type="sumbit" class="btn btn-success">Edytuj!</button>
   </form>
 
 </div>

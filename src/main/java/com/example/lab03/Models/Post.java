@@ -7,6 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -25,15 +26,14 @@ public class Post {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     @Column(name = "author")
-    @NotBlank
     private String author;
     @Column(name = "title")
-    @NotBlank
-    @Size(min=3, max=1000, message="Size must be between {min} and {max} marks")
+    @NotEmpty(message = "Pole nie może być puste!")
+    @Size(min=3, max=100, message="Długość musi być między  {min} a {max} znaków")
     private String title;
     @Column(name = "contents")
-    @NotBlank
-    @Size(min=5, max=100, message="Size must be between {min} and {max} marks")
+    @NotEmpty(message = "Pole nie może być puste!")
+    @Size(min=5, max=3000, message="Długość musi być między {min} a {max} znaków")
     private String contents;
     @Column(name = "added_date")
     @DateTimeFormat(pattern = "yyyy-mm-dd")

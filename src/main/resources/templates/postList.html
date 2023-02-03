@@ -10,6 +10,18 @@
 <div class="container">
     <div style="margin-top: 15px" class="alert alert-danger" role="alert" th:text="${success}" th:if="${success}"></div>
     <div style="margin-top: 15px" class="alert alert-success" role="alert" th:text="${addedd}" th:if="${addedd}"></div>
+
+    <form th:object="${searchObject}"  method="post" class="form-label">
+        Tytuł <input type="text" th:field="*{title}" />
+    <select th:field="*{categoryId}">
+        <option th:each="Post : ${categories}"
+                th:value="${Post.id}"
+                th:text=" ${Post.name}"/>
+        <option value=0>Brak</option>
+    </select>
+    <button type="sumbit" class="btn btn-success">Wyszukaj</button>
+    </form>
+
 <span th:unless="${#lists.isEmpty(atrybut)}">
     <table  style="width: 100%;">
         <div class="list-group list-group-light">

@@ -1,5 +1,8 @@
 package com.example.lab03.Controllers;
 
+import com.example.lab03.Interface.PostService;
+import com.example.lab03.Interface.UserService;
+import com.example.lab03.Models.SearchObject;
 import com.example.lab03.Repository.CategoryRepository;
 import com.example.lab03.Models.Category;
 import com.example.lab03.Models.Post;
@@ -8,8 +11,10 @@ import com.example.lab03.Repository.PostGenreRepository;
 import com.example.lab03.Repository.PostRepository;
 import com.example.lab03.Services.EmailService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,6 +30,10 @@ public class FormController {
     private EmailService emailService;
     private CategoryRepository categoryRepository;
     private PostGenreRepository postGenreRepository;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private UserService userSErvice;
 
     public FormController(PostRepository repository, PostGenreRepository postGenreRepository, EmailService emailService, CategoryRepository categoryRepository) {
         this.repository = repository;
@@ -34,12 +43,12 @@ public class FormController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    protected String showForm(@Valid Model model, @RequestParam(value="uid", required=false, defaultValue="-1") int postId, RedirectAttributes redirAttrs) throws Exception {
+    protected String showForm(Model model, @RequestParam(value="uid", required=false, defaultValue="-1") int postId, RedirectAttributes redirAttrs) throws Exception {
         ArrayList<PostGenre> tempPG = (ArrayList<PostGenre>) postGenreRepository.findAll();
         Post post = new Post();
         boolean isNew;
         if(postId == -1){
-            post.setAuthor("asdfasdf");
+            post.setAuthor(userSErvice.GetCurrentUser().getUsername());
             isNew = true;
         }else {
             isNew = false;
@@ -51,12 +60,18 @@ public class FormController {
         return "addPost";
     }
     @RequestMapping(method = RequestMethod.POST)
-    protected String getForm(@ModelAttribute("postModel") Post post) throws Exception {
-        post.setAuthor("Mariusz");
-        post.setCountOfDislike(0);
-        post.setAddedDate(LocalDate.now());
-        post.setCountOfLike(0);
-        repository.save(post);
+    protected String getForm(Model model, @Valid @ModelAttribute("postModel") Post post, BindingResult result, RedirectAttributes redirAttrs) throws Exception {
+        if(result.hasErrors()){
+            ArrayList<PostGenre> tempPG = (ArrayList<PostGenre>) postGenreRepository.findAll();
+            model.addAttribute("isNew", true);
+            model.addAttribute("postModel", post);
+            model.addAttribute("genresModel", tempPG);
+            return "addPost";
+        }
+        SearchObject searchObject = new SearchObject();
+        model.addAttribute("searchObject", searchObject);
+        redirAttrs.addFlashAttribute("addedd", "Pomyślnie dodano post!");
+        postService.CreatePost(post);
         return "redirect:/postList";
     }
 
