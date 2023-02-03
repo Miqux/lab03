@@ -2,6 +2,7 @@ package com.example.lab03.Config;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @Component
@@ -15,4 +16,9 @@ public class config implements WebMvcConfigurer {
         lci.setParamName("lang");
         return lci;
     }
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/403").setViewName("403");
+    }
+
 }

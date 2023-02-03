@@ -15,8 +15,7 @@
     © 2022 Bartłomiej Mikołajczuk
   </footer>
 </div>
-
-<div th:fragment="menu">
+<div th:fragment="menu"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
 
@@ -33,14 +32,30 @@
           <li class="nav-item">
             <a class="nav-link" th:href="@{/postList}">Lista postów</a>
           </li>
+            <div sec:authorize=" !isAuthenticated()">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/registery}">Rejestracja</a>
+            </li>
+            </div>
+            <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users}">Lista użytkowników</a>
+                </li>
+            </div>
         </ul>
 
-        <ul class="navbar-nav my-2 my-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/form}">Login</a>
-          </li>
-        </ul>
+   </div>
+      <div sec:authorize=" isAuthenticated()">
+        <span class ="badge float-end" sec:authentication="name"/>!
       </div>
+      <div sec:authorize=" !isAuthenticated()" class="float-end">
+        <a class="btn btn-success float-end" th:href="@{/login}">Zaloguj</a>
+      </div>
+    <div sec:authorize=" isAuthenticated()">
+        <form th:action="@{/logout}" id="logout" th:method="post">
+          <button type="submit" class="btn btn-warning float-end" >Wyloguj</button>
+        </form>
+    </div>
     </div>
   </nav>
 </div>
